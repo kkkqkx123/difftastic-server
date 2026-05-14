@@ -1,23 +1,13 @@
 [package]
-name = "difftastic"
-description = "A structural diff that understands syntax."
-repository = "https://github.com/wilfred/difftastic"
-homepage = "http://difftastic.wilfred.me.uk/"
+name = "difftastic-server"
+description = "A structural diff tool that compares files based on their syntax trees, with built-in HTTP/gRPC server and multi-interaction support."
+repository = "https://github.com/kkkqkx123/difftastic-server"
 license = "MIT"
 version = "0.69.0"
-authors = ["Wilfred Hughes <me@wilfred.me.uk>"]
-keywords = ["diff", "syntax"]
+authors = ["kkkqkx123 <k9369834@outlook.com>"]
+keywords = ["diff", "syntax", "server", "cli"]
 categories = ["development-tools", "command-line-utilities", "parser-implementations"]
 edition = "2021"
-# Goal: support at least 12 months of Rust versions, and be
-# conservative about upgrades to help packagers.
-#
-# https://releases.rs/ is a useful website to see when different Rust
-# versions were released.
-#
-# For reference, Debian stable is on 1.85 (see
-# https://tracker.debian.org/pkg/rustc) but Debian doesn't currently
-# package difftastic. Other distros are somewhat newer.
 rust-version = "1.85.0"
 include = [
         "/build.rs",
