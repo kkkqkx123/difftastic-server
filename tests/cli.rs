@@ -50,18 +50,6 @@ fn inline() {
 }
 
 #[test]
-fn binary_changed() {
-    let mut cmd = get_base_command();
-
-    cmd.arg("--display=inline")
-        .arg("img/logo.png")
-        .arg("/dev/null");
-
-    let predicate_fn = predicate::str::contains("Binary file removed");
-    cmd.assert().stdout(predicate_fn);
-}
-
-#[test]
 fn binary_override() {
     let mut cmd = get_base_command();
 

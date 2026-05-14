@@ -70,37 +70,37 @@ fn main() {
     let parsers = vec![
         TreeSitterParser {
             name: "tree-sitter-elvish",
-            src_dir: "vendored_parsers/tree-sitter-elvish-src",
+            src_dir: "vendored_parsers/tree-sitter-elvish/src",
             extra_files: vec![],
         },
         TreeSitterParser {
             name: "tree-sitter-hare",
-            src_dir: "vendored_parsers/tree-sitter-hare-src",
+            src_dir: "vendored_parsers/tree-sitter-hare/src",
             extra_files: vec![],
         },
         TreeSitterParser {
             name: "tree-sitter-janet-simple",
-            src_dir: "vendored_parsers/tree-sitter-janet-simple-src",
+            src_dir: "vendored_parsers/tree-sitter-janet-simple/src",
             extra_files: vec!["scanner.c"],
         },
         TreeSitterParser {
             name: "tree-sitter-kotlin",
-            src_dir: "vendored_parsers/tree-sitter-kotlin-src",
+            src_dir: "vendored_parsers/tree-sitter-kotlin/src",
             extra_files: vec!["scanner.c"],
         },
         TreeSitterParser {
             name: "tree-sitter-latex",
-            src_dir: "vendored_parsers/tree-sitter-latex-src",
+            src_dir: "vendored_parsers/tree-sitter-latex/src",
             extra_files: vec!["scanner.c"],
         },
         TreeSitterParser {
             name: "tree-sitter-scss",
-            src_dir: "vendored_parsers/tree-sitter-scss-src",
+            src_dir: "vendored_parsers/tree-sitter-scss/src",
             extra_files: vec!["scanner.c"],
         },
         TreeSitterParser {
             name: "tree-sitter-smali",
-            src_dir: "vendored_parsers/tree-sitter-smali-src",
+            src_dir: "vendored_parsers/tree-sitter-smali/src",
             extra_files: vec!["scanner.c"],
         },
     ];
@@ -124,6 +124,13 @@ fn main() {
     // Note that difftastic does not use jemalloc on all operating
     // systems, but it's harmless to set this unconditionally.
     println!("cargo:rustc-env=JEMALLOC_SYS_WITH_LG_PAGE=16");
+
+    #[cfg(feature = "grpc")]
+    {
+        tonic_build::compile_protos("src/api/proto/difftastic.proto")
+            .expect("Failed to compile protos");
+        println!("cargo:rerun-if-changed=src/api/proto/difftastic.proto");
+    }
 }
 
 fn commit_info() {

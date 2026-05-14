@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package difftastic;
+
+service DiffService {
+  rpc Diff(DiffRequest) returns (DiffResponse);
+  rpc Health(HealthRequest) returns (HealthResponse);
+  rpc ListLanguages(ListLanguagesRequest) returns (ListLanguagesResponse);
+}
+
+message DiffRequest {
+  string lhs_content = 1;
+  string rhs_content = 2;
+  optional string display_path = 3;
+  optional string language_override = 4;
+}
+
+message DiffResponse {
+  string display_path = 1;
+  string file_format = 2;
+  bool has_syntactic_changes = 3;
+  bool has_byte_changes = 4;
+  optional uint64 lhs_byte_len = 5;
+  optional uint64 rhs_byte_len = 6;
+  repeated Hunk hunks = 7;
+}
+
+message Hunk {
+  uint32 lhs_start_line = 1;
+  uint32 rhs_start_line = 2;
+  uint32 lhs_line_count = 3;
+  uint32 rhs_line_count = 4;
+  repeated Line lines = 5;
+}
+
+message Line {
+  optional string lhs_line = 1;
+  optional string rhs_line = 2;
+  optional uint32 lhs_line_num = 3;
+  optional uint32 rhs_line_num = 4;
+  ChangeType change_type = 5;
+}
+
+enum ChangeType {
+  CHANGE_TYPE_EQUAL = 0;
+  CHANGE_TYPE_INSERTED = 1;
+  CHANGE_TYPE_DELETED = 2;
+  CHANGE_TYPE_MODIFIED = 3;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+  int32 version = 2;
+}
+
+message ListLanguagesRequest {}
+
+message ListLanguagesResponse {
+  repeated string languages = 1;
+}

@@ -797,7 +797,7 @@ mod tests {
     use super::*;
     use crate::options::DEFAULT_TERMINAL_WIDTH;
     use crate::parse::guess_language::Language;
-    use crate::syntax::{AtomKind, MatchKind, TokenKind};
+    use crate::parse::syntax::{AtomKind, MatchKind, TokenKind};
 
     #[test]
     fn test_width_calculations() {
